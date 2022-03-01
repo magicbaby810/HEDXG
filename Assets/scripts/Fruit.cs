@@ -42,14 +42,17 @@ public class Fruit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("GameState：" + GameManager.gameManagerInstance.gameState + "FruitState：" + fruitState);
         if (GameManager.gameManagerInstance.gameState == GameState.StandBy && fruitState == FruitState.StandBy)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log("按下");
                 isMove = true;
             }
             if (Input.GetMouseButtonUp(0) && isMove)
             {
+                Debug.Log("松开");
                 isMove = false;
                 this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
                 fruitState = FruitState.Dropping;
@@ -63,19 +66,19 @@ public class Fruit : MonoBehaviour
             }
         }
 
-        if (this.transform.position.x > LimitX)
-        {
-            this.transform.position = new Vector3(LimitX, this.transform.position.y, this.transform.position.z);
-        }
-        if (this.transform.position.x < -LimitX)
-        {
-            this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
-        }
+        //if (this.transform.position.x > LimitX)
+        //{
+        //    this.transform.position = new Vector3(LimitX, this.transform.position.y, this.transform.position.z);
+        //}
+        //if (this.transform.position.x < -LimitX)
+        //{
+        //    this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("葡萄");
+        //Debug.Log("葡萄");
         if (collision.gameObject.tag.Contains("Floor"))
         {
             GameManager.gameManagerInstance.gameState = GameState.StandBy;
@@ -98,6 +101,7 @@ public class Fruit : MonoBehaviour
                     if (currentPosXY > collisionPosXY)
                     {
                         GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform.position);
+                        fruitState = FruitState.StandBy;
                         Destroy(this.gameObject);
                         Destroy(collision.gameObject);
                     }
