@@ -1,8 +1,9 @@
-﻿<Properties StartupConfiguration="{456C6E25-AF70-D9FC-543F-254F3F10C1E0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/GameManager.cs">
+﻿<Properties StartupConfiguration="{6D03F851-2F49-503D-565E-DF6B1C52FE73}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.2d.common@4.1.0/Runtime/InternalBridge/InternalEngineBridge.cs">
     <Files>
-      <File FileName="Assets/scripts/Fruit.cs" Line="10" Column="15" />
-      <File FileName="Assets/scripts/GameManager.cs" Line="27" Column="106" />
+      <File FileName="Assets/scripts/Fruit.cs" Line="82" Column="47" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="71" Column="78" />
+      <File FileName="Library/PackageCache/com.unity.2d.common@4.1.0/Runtime/InternalBridge/InternalEngineBridge.cs" Line="21" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,7 +11,7 @@
           <Node name="HCDXG2022" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="scripts" expanded="True">
-                <Node name="GameManager.cs" selected="True" />
+                <Node name="Fruit.cs" selected="True" />
               </Node>
             </Node>
           </Node>

@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{6D03F851-2F49-503D-565E-DF6B1C52FE73}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/GameManager.cs">
+    <Files>
+      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="HEDXG" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8737d906-2658-4abb-acff-264368fff467" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
