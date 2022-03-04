@@ -40,10 +40,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        Debug.Log("开始游戏");
         CreateFruit();
         gameState = GameState.StandBy;
         startBtn.SetActive(false);
-        Debug.Log("开始游戏");
     }
 
     public void InvokeCreateFruit(float invokeTime)
@@ -58,8 +58,9 @@ public class GameManager : MonoBehaviour
         if (fruitList[index] != null && fruitList.Length > index)
         {
             GameObject fruitObject = fruitList[index];
-            var currentFruit = Instantiate(fruitObject, fruitBornPosition.transform.position, fruitObject.transform.rotation);
+            var currentFruit = Instantiate(fruitObject, fruitBornPosition.transform.position, fruitObject.transform.rotation);         
             currentFruit.GetComponent<Fruit>().fruitState = FruitState.StandBy;
+            Debug.Log("随机生成水果状态：" + currentFruit.GetComponent<Fruit>().fruitState);
         }
     }
 
@@ -70,5 +71,6 @@ public class GameManager : MonoBehaviour
         GameObject newFruit = fruitList[newFruitType];
         var combineFruit = Instantiate(newFruit, combineNewPos, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
+        Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
     }
 }

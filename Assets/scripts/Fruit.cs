@@ -31,7 +31,7 @@ public class Fruit : MonoBehaviour
     public FruitType fruitType = FruitType.ONE;
     public bool isMove = false;
     public FruitState fruitState = FruitState.Ready;
-    public float LimitX = 2.0f;
+    public float LimitLeftX = 2.0f, LimitRightX = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class Fruit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("GameState：" + GameManager.gameManagerInstance.gameState + "FruitState：" + fruitState);
+        Debug.Log("GameState：" + GameManager.gameManagerInstance.gameState + "FruitState：" + fruitState + " move:" + isMove + " down:" + Input.GetMouseButtonDown(0));
         if (GameManager.gameManagerInstance.gameState == GameState.StandBy && fruitState == FruitState.StandBy)
         {
             if (Input.GetMouseButtonDown(0))
@@ -66,14 +66,14 @@ public class Fruit : MonoBehaviour
             }
         }
 
-        //if (this.transform.position.x > LimitX)
-        //{
-        //    this.transform.position = new Vector3(LimitX, this.transform.position.y, this.transform.position.z);
-        //}
-        //if (this.transform.position.x < -LimitX)
-        //{
-        //    this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
-        //}
+        if (this.transform.position.x > (-LimitLeftX - 3))
+        {
+            this.transform.position = new Vector3((-LimitLeftX - 3), this.transform.position.y, this.transform.position.z);
+        }
+        if (this.transform.position.x < (LimitLeftX + 3))
+        {
+            this.transform.position = new Vector3((LimitLeftX + 3), this.transform.position.y, this.transform.position.z);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -101,9 +101,9 @@ public class Fruit : MonoBehaviour
                     if (currentPosXY > collisionPosXY)
                     {
                         GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform.position);
-                        fruitState = FruitState.StandBy;
                         Destroy(this.gameObject);
                         Destroy(collision.gameObject);
+                        fruitState = FruitState.StandBy;
                     }
                 }
             }
