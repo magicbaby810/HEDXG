@@ -49,7 +49,7 @@ MonoBehaviour:
   fruitType: 4
   isMove: 0
   fruitState: 0
-  LimitLeftX: -2.74
+  LimitLeftX: -5.48
   LimitRightX: 5.48
 --- !u!212 &2845168010747894989
 SpriteRenderer:
