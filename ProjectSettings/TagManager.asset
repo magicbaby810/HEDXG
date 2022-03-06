@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fruit
   - Floor
+  - RedLine
   layers:
   - Default
   - TransparentFX

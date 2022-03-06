@@ -50,7 +50,9 @@ MonoBehaviour:
   isMove: 0
   fruitState: 0
   LimitLeftX: -5.41
-  LimitRightX: -0.68
+  originScale: {x: 0, y: 0, z: 0}
+  scaleSpeed: 0.01
+  fruitScore: 6
 --- !u!212 &6827818683466271139
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,7 +135,7 @@ Rigidbody2D:
   m_Mass: 0.6
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

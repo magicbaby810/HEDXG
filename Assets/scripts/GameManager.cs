@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum GameState
@@ -20,6 +21,16 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManagerInstance;
 
     public GameState gameState = GameState.Ready;
+
+    public Vector3 combineScale = new Vector3(0, 0, 0);
+
+    public float totalScore = 0f;
+    public Text highestScore;
+    public Text totalScoreText;
+
+    public AudioSource combineSource;
+    public AudioSource hitSource;
+    public AudioSource fruitSource;
 
     private void Awake()
     {
@@ -43,6 +54,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("开始游戏");
         CreateFruit();
         gameState = GameState.StandBy;
+        highestScore.text = "历史最高：" + PlayerPrefs.GetFloat("highestScore") + "分"; 
         startBtn.SetActive(false);
     }
 
@@ -53,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(0, 5);
+        int index = Random.Range(8, 11);
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {
@@ -71,6 +83,11 @@ public class GameManager : MonoBehaviour
         GameObject newFruit = fruitList[newFruitType];
         var combineFruit = Instantiate(newFruit, combineNewPos, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
+        combineFruit.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
         Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
+
+        combineFruit.transform.localScale = combineScale;
+
+        combineSource.Play();
     }
 }
