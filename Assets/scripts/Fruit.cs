@@ -37,6 +37,8 @@ public class Fruit : MonoBehaviour
     public float scaleSpeed = 0.01f;
     public float fruitScore = 1.0f;
 
+    public float LimitRedHeight = 1.0f;
+
     private void Awake()
     {
         originScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -114,17 +116,15 @@ public class Fruit : MonoBehaviour
                 
                 //RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
 
+                if (this.transform.position.y > LimitRedHeight)
+                {
+                    RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
+                }
+
                 Debug.Log("6666 " + this.transform.position.y + " " + RedLine.redLineInstance.transform.position.y);
                 GameManager.gameManagerInstance.fruitSource.Play();
             }
         }
-
-        if (collision.gameObject.tag.Contains("RedLine"))
-        {
-            Debug.Log("7777");
-
-        }
-
 
         if ((int) fruitState >= (int) FruitState.Dropping)
         {

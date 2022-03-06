@@ -64,6 +64,7 @@ public class RedLine : MonoBehaviour
         }
     }
 
+
     public void MoveAndCalculateScoreState()
     {
         Debug.Log("333");

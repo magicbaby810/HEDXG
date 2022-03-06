@@ -53,6 +53,7 @@ MonoBehaviour:
   originScale: {x: 0, y: 0, z: 0}
   scaleSpeed: 0.01
   fruitScore: 10
+  LimitRedHeight: 3.94
 --- !u!212 &1759530051069260148
 SpriteRenderer:
   m_ObjectHideFlags: 0
