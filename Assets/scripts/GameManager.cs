@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("开始游戏");
         CreateFruit();
         gameState = GameState.StandBy;
-        highestScore.text = "历史最高：" + PlayerPrefs.GetFloat("highestScore") + "分"; 
+        highestScore.text = "最高：" + PlayerPrefs.GetFloat("highestScore") + "分";
+        totalScoreText.text = "总分：0分";
         startBtn.SetActive(false);
     }
 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(8, 11);
+        int index = Random.Range(0, 5);
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {

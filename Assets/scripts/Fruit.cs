@@ -31,17 +31,17 @@ public class Fruit : MonoBehaviour
     public FruitType fruitType = FruitType.ONE;
     public bool isMove = false;
     public FruitState fruitState = FruitState.Ready;
-    public float LimitLeftX = 2.0f;
+    public float LimitX = 2.0f;
 
     public Vector3 originScale = Vector3.zero;
-    public float scaleSpeed = 0.01f;
+    public float scaleSpeed = 0.1f;
     public float fruitScore = 1.0f;
 
     public float LimitRedHeight = 1.0f;
 
     private void Awake()
     {
-        originScale = new Vector3(0.5f, 0.5f, 0.5f);
+        originScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
     // Start is called before the first frame update
     void Start()
@@ -71,25 +71,26 @@ public class Fruit : MonoBehaviour
             }
             if (isMove)
             {
-                Vector3 mousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 this.gameObject.GetComponent<Transform>().position = new Vector3(mousePosition.x, this.gameObject.GetComponent<Transform>().position.y, this.gameObject.GetComponent<Transform>().position.z);
             }
         }
-
-        if (this.transform.position.x > (-LimitLeftX - 3))
+        //Debug.Log("LimitLeftX is " + LimitX);
+        if (this.transform.position.x > LimitX)
         {
-            this.transform.position = new Vector3((-LimitLeftX - 3), this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(LimitX, this.transform.position.y, this.transform.position.z);
         }
-        if (this.transform.position.x < (LimitLeftX + 3))
+        if (this.transform.position.x < -LimitX)
         {
-            this.transform.position = new Vector3((LimitLeftX + 3), this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(-LimitX, this.transform.position.y, this.transform.position.z);
         }
 
         if (this.transform.localScale.x < originScale.x)
         {
             Debug.Log("scale " + this.transform.localScale.x + " " + originScale.x);
             this.transform.localScale += (new Vector3(1, 1, 1) * scaleSpeed);
-        } else
+        }
+        else
         {
             this.transform.localScale = originScale;
         }
@@ -140,7 +141,7 @@ public class Fruit : MonoBehaviour
                         {
                             GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform.position);
                             GameManager.gameManagerInstance.totalScore += fruitScore;
-                            GameManager.gameManagerInstance.totalScoreText.text = GameManager.gameManagerInstance.totalScore.ToString() + "分";
+                            GameManager.gameManagerInstance.totalScoreText.text = "总分：" + GameManager.gameManagerInstance.totalScore.ToString() + "分";
                             Destroy(this.gameObject);
                             Destroy(collision.gameObject);
                         }

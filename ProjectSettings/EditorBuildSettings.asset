@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HCDXG2022.unity
     guid: 1726e3a1b35dd447584612f56b5e48dc
+  - enabled: 1
+    path: Assets/Scenes/HCDXG.unity
+    guid: f6aea6a8ad43c4e48b8416ecc651b59c
   m_configObjects: {}
