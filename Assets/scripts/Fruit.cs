@@ -114,9 +114,9 @@ public class Fruit : MonoBehaviour
             {
                 GameManager.gameManagerInstance.gameState = GameState.StandBy;
                 fruitState = FruitState.Collision;
-                
-                //RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
 
+                //RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
+                Debug.Log(this.transform.position.y + "  LimitRedHeight is " + LimitRedHeight);
                 if (this.transform.position.y > LimitRedHeight)
                 {
                     RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);

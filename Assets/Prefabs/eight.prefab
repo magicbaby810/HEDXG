@@ -104,7 +104,7 @@ MonoBehaviour:
   originScale: {x: 0, y: 0, z: 0}
   scaleSpeed: 0.1
   fruitScore: 1
-  LimitRedHeight: 1
+  LimitRedHeight: 1.727
 --- !u!58 &6028220486572849026
 CircleCollider2D:
   m_ObjectHideFlags: 0
