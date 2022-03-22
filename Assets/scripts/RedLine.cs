@@ -9,7 +9,8 @@ public class RedLine : MonoBehaviour
     public float speed = 0.8f;
     public float limit_y = 0.5f;
     public static RedLine redLineInstance;
-
+    public int count = 0;
+    public int gameOverCount = 0;
 
     private void Awake()
     {
@@ -27,11 +28,42 @@ public class RedLine : MonoBehaviour
     {
         if (isMove)
         {
+            Debug.Log("RedLine " + this.transform.position.y + " " + limit_y);
             if (this.transform.position.y > limit_y)
             {
-                this.transform.Translate(Vector3.right * speed);
+                count++;                
+                if (count < 20)
+                {
+                    redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                }
+                else if (count > 20)
+                {
+                    redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                if (count == 40)
+                {
+                    gameOverCount++;
+                    count = 0;
+                }
+                if (gameOverCount == 5)
+                {
+                    Debug.Log("RedLine 5");
+                    isMove = false;
+                    count = 0;
+                    gameOverCount = 0;
+                }
+                else if (gameOverCount == 10)
+                {
+                    Debug.Log("RedLine 10");
+                    GameManager.gameManagerInstance.gameState = GameState.GameOver;
+                    isMove = false;
+                    count = 0;
+                    gameOverCount = 0;
+                }
+                //this.transform.Translate(Vector3.down * speed);
             } else
             {
+                Debug.Log("RedLine " + isMove);
                 isMove = false;
                 Invoke("ReloadScene", 1.0f);
             }
@@ -49,7 +81,7 @@ public class RedLine : MonoBehaviour
                 Debug.Log("222 " + collision.gameObject.GetComponent<Fruit>().fruitState);
                 if (collision.gameObject.GetComponent<Fruit>().fruitState == FruitState.Collision)
                 {
-                    GameManager.gameManagerInstance.gameState = GameState.GameOver;
+                    //GameManager.gameManagerInstance.gameState = GameState.GameOver;
                     Invoke("MoveAndCalculateScoreState", 0.5f);
                 }
             }
@@ -69,7 +101,7 @@ public class RedLine : MonoBehaviour
     {
         Debug.Log("333");
         isMove = true;
-        GameManager.gameManagerInstance.gameState = GameState.CalculateScore;
+        //GameManager.gameManagerInstance.gameState = GameState.CalculateScore;
     }
 
     public void ReloadScene()
@@ -80,6 +112,6 @@ public class RedLine : MonoBehaviour
             PlayerPrefs.SetFloat("highestScore", GameManager.gameManagerInstance.totalScore);
         }
 
-        SceneManager.LoadScene("HCDXG2022");
+        SceneManager.LoadScene("HCDXG");
     }
 }

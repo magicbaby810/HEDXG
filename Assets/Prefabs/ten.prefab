@@ -102,7 +102,7 @@ MonoBehaviour:
   fruitState: 0
   LimitX: 0.768
   originScale: {x: 0, y: 0, z: 0}
-  scaleSpeed: 0.1
+  scaleSpeed: 0.05
   fruitScore: 1
   LimitRedHeight: 1.482
 --- !u!58 &5393317386704029689

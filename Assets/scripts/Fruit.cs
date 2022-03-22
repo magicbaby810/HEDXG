@@ -126,26 +126,27 @@ public class Fruit : MonoBehaviour
                 GameManager.gameManagerInstance.fruitSource.Play();
             }
         }
-
+        Debug.Log("xxxxxxxx");
         if ((int) fruitState >= (int) FruitState.Dropping)
         {
             if (collision.gameObject.tag.Contains("Fruit"))
             {
+                Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
                 if (fruitType == collision.gameObject.GetComponent<Fruit>().fruitType && fruitType != FruitType.ELEVEN) 
                 {
-                    if (this.transform.localScale == originScale)
-                    {
+                    //if (this.transform.localScale == originScale)
+                    //{
                         float currentPosXY = this.transform.position.x + this.transform.position.y;
                         float collisionPosXY = collision.transform.position.x + collision.transform.position.y;
                         if (currentPosXY > collisionPosXY)
                         {
-                            GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform.position);
+                            GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
                             GameManager.gameManagerInstance.totalScore += fruitScore;
                             GameManager.gameManagerInstance.totalScoreText.text = "总分：" + GameManager.gameManagerInstance.totalScore.ToString() + "分";
                             Destroy(this.gameObject);
                             Destroy(collision.gameObject);
                         }
-                    } 
+                    //} 
                 }
             }
         }

@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(0, 5);
+        int index = Random.Range(8, 10);
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {
@@ -77,17 +77,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CombineNewFruit(FruitType fruitType, Vector3 currentPos, Vector3 collisionPos)
+    public void CombineNewFruit(FruitType fruitType, Vector3 currentPos, Transform collisionPos)
     {
-        Vector3 combineNewPos = (collisionPos + collisionPos) / 2;
+        Vector3 combineNewPos = (currentPos + collisionPos.position) / 2;
         int newFruitType = (int) fruitType + 1;
         GameObject newFruit = fruitList[newFruitType];
-        var combineFruit = Instantiate(newFruit, combineNewPos, newFruit.transform.rotation);
+        var combineFruit = Instantiate(newFruit, collisionPos.position, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
         combineFruit.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
         Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
 
-        combineFruit.transform.localScale = combineScale;
+        float combineRadius = combineFruit.GetComponent<CircleCollider2D>().radius * 2;
+        float radius = collisionPos.gameObject.GetComponent<CircleCollider2D>().radius * 2;
+
+        combineFruit.transform.localScale = new Vector3(radius / combineRadius, radius / combineRadius, radius / combineRadius);
 
         combineSource.Play();
     }
