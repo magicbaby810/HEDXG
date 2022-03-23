@@ -755,6 +755,7 @@ GameObject:
   - component: {fileID: 739909016}
   - component: {fileID: 739909017}
   - component: {fileID: 739909018}
+  - component: {fileID: 739909019}
   m_Layer: 0
   m_Name: RedLine
   m_TagString: Untagged
@@ -845,6 +846,34 @@ MonoBehaviour:
   limit_y: 0.5
   count: 0
   gameOverCount: 0
+  isStay: 0
+  maxCount: 5
+--- !u!61 &739909019
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739909015}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!4 &772461473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286722744665756035, guid: 5a23a8856c410456bbd033074b8a1bd6,

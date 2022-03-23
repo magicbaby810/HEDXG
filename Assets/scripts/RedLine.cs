@@ -11,6 +11,8 @@ public class RedLine : MonoBehaviour
     public static RedLine redLineInstance;
     public int count = 0;
     public int gameOverCount = 0;
+    public bool isStay = false;
+    public int maxCount = 5;
 
     private void Awake()
     {
@@ -28,44 +30,34 @@ public class RedLine : MonoBehaviour
     {
         if (isMove)
         {
-            Debug.Log("RedLine " + this.transform.position.y + " " + limit_y);
-            if (this.transform.position.y > limit_y)
+            count++;
+            if (count < 20)
             {
-                count++;                
-                if (count < 20)
-                {
-                    redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-                }
-                else if (count > 20)
-                {
-                    redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-                if (count == 40)
-                {
-                    gameOverCount++;
-                    count = 0;
-                }
-                if (gameOverCount == 5)
-                {
-                    Debug.Log("RedLine 5");
-                    isMove = false;
-                    count = 0;
-                    gameOverCount = 0;
-                }
-                else if (gameOverCount == 10)
-                {
-                    Debug.Log("RedLine 10");
-                    GameManager.gameManagerInstance.gameState = GameState.GameOver;
-                    isMove = false;
-                    count = 0;
-                    gameOverCount = 0;
-                }
-                //this.transform.Translate(Vector3.down * speed);
-            } else
+                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+            }
+            else if (count > 20)
             {
-                Debug.Log("RedLine " + isMove);
+                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            if (count == 40)
+            {
+                gameOverCount++;
+                count = 0;
+            }
+
+            if (gameOverCount < maxCount && !isStay)
+            {
                 isMove = false;
-                Invoke("ReloadScene", 1.0f);
+                gameOverCount = 0;             
+                count = 0;
+                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+           
+            if (gameOverCount == maxCount)
+            {
+                Debug.Log("RedLine 10");
+                Invoke("GameOverAndCalculateScoreState", 0.5f);
+             
             }
         }
     }
@@ -82,7 +74,9 @@ public class RedLine : MonoBehaviour
                 if (collision.gameObject.GetComponent<Fruit>().fruitState == FruitState.Collision)
                 {
                     //GameManager.gameManagerInstance.gameState = GameState.GameOver;
-                    Invoke("MoveAndCalculateScoreState", 0.5f);
+                    //Invoke("MoveAndCalculateScoreState", 0.5f);
+                    isMove = true;
+                    isStay = true;
                 }
             }
 
@@ -96,11 +90,27 @@ public class RedLine : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("exitexit");
+        isStay = false;
+    }
 
-    public void MoveAndCalculateScoreState()
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //Debug.Log("zzzzzzz");
+        isStay = true;
+    }
+
+
+    public void GameOverAndCalculateScoreState()
     {
         Debug.Log("333");
-        isMove = true;
+        isMove = false;
+        GameManager.gameManagerInstance.gameState = GameState.GameOver;
+        count = 0;
+        gameOverCount = 0;
+        Invoke("ReloadScene", 1.0f);
         //GameManager.gameManagerInstance.gameState = GameState.CalculateScore;
     }
 
@@ -114,4 +124,5 @@ public class RedLine : MonoBehaviour
 
         SceneManager.LoadScene("HCDXG");
     }
+
 }

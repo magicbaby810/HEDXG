@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(8, 10);
+        int index = Random.Range(0, 5);
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {
