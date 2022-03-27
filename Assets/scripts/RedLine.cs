@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RedLine : MonoBehaviour
 {
@@ -12,7 +13,12 @@ public class RedLine : MonoBehaviour
     public int count = 0;
     public int gameOverCount = 0;
     public bool isStay = false;
-    public int maxCount = 5;
+    public int maxCount = 3;
+    public AudioSource alarmAudioSource;
+
+    public GameObject screenFader;
+    public Text highestScoreText;
+
 
     private void Awake()
     {
@@ -31,15 +37,15 @@ public class RedLine : MonoBehaviour
         if (isMove)
         {
             count++;
-            if (count < 20)
-            {
-                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
-            }
-            else if (count > 20)
+            if (count < 10)
             {
                 redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
             }
-            if (count == 40)
+            else if (count > 10)
+            {
+                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+            }
+            if (count == 20)
             {
                 gameOverCount++;
                 count = 0;
@@ -47,6 +53,7 @@ public class RedLine : MonoBehaviour
 
             if (gameOverCount < maxCount && !isStay)
             {
+                alarmAudioSource.Stop();
                 isMove = false;
                 gameOverCount = 0;             
                 count = 0;
@@ -55,6 +62,7 @@ public class RedLine : MonoBehaviour
            
             if (gameOverCount == maxCount)
             {
+                alarmAudioSource.Stop();
                 Debug.Log("RedLine 10");
                 Invoke("GameOverAndCalculateScoreState", 0.5f);
              
@@ -75,6 +83,8 @@ public class RedLine : MonoBehaviour
                 {
                     //GameManager.gameManagerInstance.gameState = GameState.GameOver;
                     //Invoke("MoveAndCalculateScoreState", 0.5f);
+                    alarmAudioSource.loop = true;
+                    alarmAudioSource.Play();
                     isMove = true;
                     isStay = true;
                 }
@@ -84,7 +94,7 @@ public class RedLine : MonoBehaviour
             {
                 float currentScore = collision.GetComponent<Fruit>().fruitScore;
                 GameManager.gameManagerInstance.totalScore += currentScore;
-                GameManager.gameManagerInstance.totalScoreText.text = GameManager.gameManagerInstance.totalScore + "分";
+                GameManager.gameManagerInstance.totalScoreText.text = GameManager.gameManagerInstance.totalScore.ToString();
                 Destroy(collision.gameObject);
             }
         }
@@ -110,19 +120,18 @@ public class RedLine : MonoBehaviour
         GameManager.gameManagerInstance.gameState = GameState.GameOver;
         count = 0;
         gameOverCount = 0;
-        Invoke("ReloadScene", 1.0f);
-        //GameManager.gameManagerInstance.gameState = GameState.CalculateScore;
-    }
 
-    public void ReloadScene()
-    {
+        screenFader.SetActive(true);
+
         float highestScore = PlayerPrefs.GetFloat("highestScore");
         if (highestScore < GameManager.gameManagerInstance.totalScore)
         {
             PlayerPrefs.SetFloat("highestScore", GameManager.gameManagerInstance.totalScore);
         }
 
-        SceneManager.LoadScene("HCDXG");
+        highestScoreText.text = "HIGHEST：" + highestScore;
+        //GameManager.gameManagerInstance.gameState = GameState.CalculateScore;
     }
+
 
 }

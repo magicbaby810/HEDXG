@@ -64,10 +64,11 @@ public class Fruit : MonoBehaviour
             {
                 Debug.Log("松开");
                 isMove = false;
-                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                float gravityScale = (1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10) + 1;
+                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
                 fruitState = FruitState.Dropping;
                 GameManager.gameManagerInstance.gameState = GameState.InProgress;
-                GameManager.gameManagerInstance.InvokeCreateFruit(1.0f);
+                GameManager.gameManagerInstance.InvokeCreateFruit(1.5f);
             }
             if (isMove)
             {
@@ -118,7 +119,7 @@ public class Fruit : MonoBehaviour
                 //RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
                 Debug.Log(this.transform.position.y + "  LimitRedHeight is " + LimitRedHeight);
                 if (this.transform.position.y > LimitRedHeight)
-                {
+                {     
                     RedLine.redLineInstance.OnTriggerEnter2D(collision.collider);
                 }
 
@@ -142,7 +143,7 @@ public class Fruit : MonoBehaviour
                         {
                             GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
                             GameManager.gameManagerInstance.totalScore += fruitScore;
-                            GameManager.gameManagerInstance.totalScoreText.text = "总分：" + GameManager.gameManagerInstance.totalScore.ToString() + "分";
+                            GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
                             Destroy(this.gameObject);
                             Destroy(collision.gameObject);
                         }

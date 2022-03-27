@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public enum GameState
@@ -25,12 +26,14 @@ public class GameManager : MonoBehaviour
     public Vector3 combineScale = new Vector3(0, 0, 0);
 
     public float totalScore = 0f;
-    public Text highestScore;
+   
     public Text totalScoreText;
 
     public AudioSource combineSource;
     public AudioSource hitSource;
     public AudioSource fruitSource;
+
+    public GameObject replayBtn;
 
     private void Awake()
     {
@@ -54,8 +57,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("开始游戏");
         CreateFruit();
         gameState = GameState.StandBy;
-        highestScore.text = "最高：" + PlayerPrefs.GetFloat("highestScore") + "分";
-        totalScoreText.text = "总分：0分";
+        totalScoreText.text = "SCORE：0";
         startBtn.SetActive(false);
     }
 
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject fruitObject = fruitList[index];
             var currentFruit = Instantiate(fruitObject, fruitBornPosition.transform.position, fruitObject.transform.rotation);         
-            currentFruit.GetComponent<Fruit>().fruitState = FruitState.StandBy;
+            currentFruit.GetComponent<Fruit>().fruitState = FruitState.StandBy;      
             Debug.Log("随机生成水果状态：" + currentFruit.GetComponent<Fruit>().fruitState);
         }
     }
@@ -93,5 +95,15 @@ public class GameManager : MonoBehaviour
         combineFruit.transform.localScale = new Vector3(radius / combineRadius, radius / combineRadius, radius / combineRadius);
 
         combineSource.Play();
+    }
+
+    public void Replay()
+    {
+        Invoke("ReloadScene", 1.0f);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("HCDXG");
     }
 }
