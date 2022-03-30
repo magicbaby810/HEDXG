@@ -100,11 +100,11 @@ MonoBehaviour:
   fruitType: 9
   isMove: 1
   fruitState: 0
-  LimitX: 0.768
+  LimitX: 0.713
   originScale: {x: 0, y: 0, z: 0}
   scaleSpeed: 0.05
   fruitScore: 1
-  LimitRedHeight: 1.482
+  LimitRedHeight: 1.414
 --- !u!58 &5393317386704029689
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.545
+  m_Radius: 1.6
 --- !u!50 &5393317386704029690
 Rigidbody2D:
   serializedVersion: 4
@@ -133,7 +133,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 7.49906
+  m_Mass: 8.042478
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

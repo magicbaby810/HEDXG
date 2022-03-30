@@ -86,7 +86,10 @@ public class GameManager : MonoBehaviour
         GameObject newFruit = fruitList[newFruitType];
         var combineFruit = Instantiate(newFruit, collisionPos.position, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
-        combineFruit.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+
+        float gravityScale = 1 - (float)combineFruit.GetComponent<Fruit>().fruitType / 10;
+
+        combineFruit.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
 
         float combineRadius = combineFruit.GetComponent<CircleCollider2D>().radius * 2;

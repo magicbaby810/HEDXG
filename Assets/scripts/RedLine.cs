@@ -16,8 +16,10 @@ public class RedLine : MonoBehaviour
     public int maxCount = 3;
     public AudioSource alarmAudioSource;
 
-    public GameObject screenFader;
+
     public Text highestScoreText;
+
+
 
 
     private void Awake()
@@ -64,7 +66,7 @@ public class RedLine : MonoBehaviour
             {
                 alarmAudioSource.Stop();
                 Debug.Log("RedLine 10");
-                Invoke("GameOverAndCalculateScoreState", 0.5f);
+                Invoke("GameOverAndCalculateScoreState", 0f);
              
             }
         }
@@ -119,9 +121,6 @@ public class RedLine : MonoBehaviour
         isMove = false;
         GameManager.gameManagerInstance.gameState = GameState.GameOver;
         count = 0;
-        gameOverCount = 0;
-
-        screenFader.SetActive(true);
 
         float highestScore = PlayerPrefs.GetFloat("highestScore");
         if (highestScore < GameManager.gameManagerInstance.totalScore)

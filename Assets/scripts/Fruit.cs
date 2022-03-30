@@ -38,6 +38,7 @@ public class Fruit : MonoBehaviour
     public float fruitScore = 1.0f;
 
     public float LimitRedHeight = 1.0f;
+    public bool isCombineOver = true;
 
     private void Awake()
     {
@@ -64,7 +65,7 @@ public class Fruit : MonoBehaviour
             {
                 Debug.Log("松开");
                 isMove = false;
-                float gravityScale = (1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10) + 1;
+                float gravityScale = 1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10;
                 this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
                 fruitState = FruitState.Dropping;
                 GameManager.gameManagerInstance.gameState = GameState.InProgress;
@@ -127,7 +128,7 @@ public class Fruit : MonoBehaviour
                 GameManager.gameManagerInstance.fruitSource.Play();
             }
         }
-        Debug.Log("xxxxxxxx");
+        //Debug.Log("xxxxxxxx");
         if ((int) fruitState >= (int) FruitState.Dropping)
         {
             if (collision.gameObject.tag.Contains("Fruit"))
@@ -141,11 +142,18 @@ public class Fruit : MonoBehaviour
                         float collisionPosXY = collision.transform.position.x + collision.transform.position.y;
                         if (currentPosXY > collisionPosXY)
                         {
-                            GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
-                            GameManager.gameManagerInstance.totalScore += fruitScore;
-                            GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
-                            Destroy(this.gameObject);
-                            Destroy(collision.gameObject);
+                            if (isCombineOver)
+                            {
+                                isCombineOver = false;
+
+                                GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
+                                GameManager.gameManagerInstance.totalScore += fruitScore;
+                                GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
+                                Destroy(this.gameObject);
+                                Destroy(collision.gameObject);
+
+                                isCombineOver = true;
+                            }    
                         }
                     //} 
                 }
