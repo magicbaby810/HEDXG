@@ -23,7 +23,7 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("GameOver " + RedLine.redLineInstance.gameOverCount + " " + RedLine.redLineInstance.maxCount);
+        //Debug.Log("GameOver " + RedLine.redLineInstance.gameOverCount + " " + RedLine.redLineInstance.maxCount);
         if (RedLine.redLineInstance.gameOverCount == RedLine.redLineInstance.maxCount)
         {        
             screenFader.SetActive(true);

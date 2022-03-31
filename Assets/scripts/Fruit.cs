@@ -42,7 +42,7 @@ public class Fruit : MonoBehaviour
 
     private void Awake()
     {
-        originScale = new Vector3(1.0f, 1.0f, 1.0f);
+        originScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
     // Start is called before the first frame update
     void Start()
@@ -65,7 +65,7 @@ public class Fruit : MonoBehaviour
             {
                 Debug.Log("松开");
                 isMove = false;
-                float gravityScale = 1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10;
+                float gravityScale = (1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10) + 1;
                 this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
                 fruitState = FruitState.Dropping;
                 GameManager.gameManagerInstance.gameState = GameState.InProgress;
@@ -90,7 +90,7 @@ public class Fruit : MonoBehaviour
         if (this.transform.localScale.x < originScale.x)
         {
             Debug.Log("scale " + this.transform.localScale.x + " " + originScale.x);
-            this.transform.localScale += (new Vector3(1, 1, 1) * scaleSpeed);
+            this.transform.localScale += (new Vector3(0.5f, 0.5f, 0.5f) * scaleSpeed);
         }
         else
         {
@@ -133,7 +133,7 @@ public class Fruit : MonoBehaviour
         {
             if (collision.gameObject.tag.Contains("Fruit"))
             {
-                Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
+                //Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
                 if (fruitType == collision.gameObject.GetComponent<Fruit>().fruitType && fruitType != FruitType.ELEVEN) 
                 {
                     //if (this.transform.localScale == originScale)
@@ -147,6 +147,7 @@ public class Fruit : MonoBehaviour
                                 isCombineOver = false;
 
                                 GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
+                                fruitScore = ((int)fruitType + 1) * 2;
                                 GameManager.gameManagerInstance.totalScore += fruitScore;
                                 GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
                                 Destroy(this.gameObject);

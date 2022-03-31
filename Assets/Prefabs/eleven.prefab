@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6286722744665756034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,11 +100,12 @@ MonoBehaviour:
   fruitType: 10
   isMove: 1
   fruitState: 0
-  LimitX: 0.561
+  LimitX: 1.437
   originScale: {x: 0, y: 0, z: 0}
   scaleSpeed: 0.05
   fruitScore: 1
-  LimitRedHeight: 1.263
+  LimitRedHeight: 2.141
+  isCombineOver: 1
 --- !u!58 &6286722744665756033
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -133,7 +134,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 9.621128
+  m_Mass: 2.405282
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

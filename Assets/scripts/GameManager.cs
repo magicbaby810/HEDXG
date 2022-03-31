@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(0, 5);
+        int index = Random.Range(8, 10);
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         var combineFruit = Instantiate(newFruit, collisionPos.position, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
 
-        float gravityScale = 1 - (float)combineFruit.GetComponent<Fruit>().fruitType / 10;
+        float gravityScale = (1 - (float)combineFruit.GetComponent<Fruit>().fruitType / 10) + 1;
 
         combineFruit.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
