@@ -22,8 +22,7 @@ public enum FruitType
     SEVEN = 6,
     EIGHT = 7,
     NINE = 8,
-    TEN = 9,
-    ELEVEN = 10
+    TEN = 9
 }
 
 public class Fruit : MonoBehaviour
@@ -38,11 +37,13 @@ public class Fruit : MonoBehaviour
     public float fruitScore = 1.0f;
 
     public float LimitRedHeight = 1.0f;
-    public bool isCombineOver = true;
+
+    public bool isCombining = false;
+
 
     private void Awake()
     {
-        originScale = new Vector3(0.5f, 0.5f, 0.5f);
+        originScale = new Vector3(0.8f, 0.8f, 0.8f);
     }
     // Start is called before the first frame update
     void Start()
@@ -65,8 +66,7 @@ public class Fruit : MonoBehaviour
             {
                 Debug.Log("松开");
                 isMove = false;
-                float gravityScale = (1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10) + 1;
-                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
                 fruitState = FruitState.Dropping;
                 GameManager.gameManagerInstance.gameState = GameState.InProgress;
                 GameManager.gameManagerInstance.InvokeCreateFruit(1.5f);
@@ -96,6 +96,7 @@ public class Fruit : MonoBehaviour
         {
             this.transform.localScale = originScale;
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -128,35 +129,59 @@ public class Fruit : MonoBehaviour
                 GameManager.gameManagerInstance.fruitSource.Play();
             }
         }
+
+        checkCollision(collision);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+
+       checkCollision(collision);
+
+    }
+
+    public void checkCollision(Collision2D collision)
+    {
         //Debug.Log("xxxxxxxx");
-        if ((int) fruitState >= (int) FruitState.Dropping)
+        if ((int)fruitState >= (int)FruitState.Dropping)
         {
             if (collision.gameObject.tag.Contains("Fruit"))
             {
                 //Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
-                if (fruitType == collision.gameObject.GetComponent<Fruit>().fruitType && fruitType != FruitType.ELEVEN) 
+                if (fruitType == collision.gameObject.GetComponent<Fruit>().fruitType)
                 {
-                    //if (this.transform.localScale == originScale)
-                    //{
-                        float currentPosXY = this.transform.position.x + this.transform.position.y;
-                        float collisionPosXY = collision.transform.position.x + collision.transform.position.y;
-                        if (currentPosXY > collisionPosXY)
+                    if (fruitType != FruitType.TEN)
+                    {
+                        if (this.transform.localScale == originScale)
                         {
-                            if (isCombineOver)
+                            Debug.Log("xxxxxxxx 是否正在合成 = " + isCombining);
+                            if (!isCombining)
                             {
-                                isCombineOver = false;
+                                float currentPosXY = this.transform.position.x + this.transform.position.y;
+                                float collisionPosXY = collision.transform.position.x + collision.transform.position.y;
+                                if (currentPosXY > collisionPosXY)
+                                {
+                                    isCombining = true;
+                                    Debug.Log("xxxxxxxx 合成开始");
 
-                                GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
-                                fruitScore = ((int)fruitType + 1) * 2;
-                                GameManager.gameManagerInstance.totalScore += fruitScore;
-                                GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
-                                Destroy(this.gameObject);
-                                Destroy(collision.gameObject);
+                                    GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
+                                    fruitScore = ((int)fruitType + 1) * 2;
+                                    GameManager.gameManagerInstance.totalScore += fruitScore;
+                                    GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
+                                    Destroy(this.gameObject);
+                                    Destroy(collision.gameObject);
 
-                                isCombineOver = true;
-                            }    
+                                    isCombining = false;
+                                    Debug.Log("xxxxxxxx 合成结束");
+                                }
+                            }  
                         }
-                    //} 
+                    }
+                    else
+                    {
+                        Destroy(this.gameObject);
+                        Destroy(collision.gameObject);
+                    }
                 }
             }
         }

@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject replayBtn;
 
+    public bool isReturn = false;
+
+
     private void Awake()
     {
         gameManagerInstance = this;
@@ -68,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFruit()
     {
-        int index = Random.Range(8, 10);
+        int index = randomForSmall();
         Debug.Log("随机生成第" + index + "个水果");
         if (fruitList[index] != null && fruitList.Length > index)
         {
@@ -84,12 +87,10 @@ public class GameManager : MonoBehaviour
         Vector3 combineNewPos = (currentPos + collisionPos.position) / 2;
         int newFruitType = (int) fruitType + 1;
         GameObject newFruit = fruitList[newFruitType];
-        var combineFruit = Instantiate(newFruit, collisionPos.position, newFruit.transform.rotation);
+        var combineFruit = Instantiate(newFruit, combineNewPos, newFruit.transform.rotation);
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
-
-        float gravityScale = (1 - (float)combineFruit.GetComponent<Fruit>().fruitType / 10) + 1;
-
-        combineFruit.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+        combineFruit.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+        
         Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
 
         float combineRadius = combineFruit.GetComponent<CircleCollider2D>().radius * 2;
@@ -108,5 +109,24 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene("HCDXG");
+    }
+
+    public int randomForSmall()
+    {
+
+        int index = Random.Range(0, 5);
+       
+        if (index == 4 || index == 5)
+        {
+            if (isReturn)
+            {
+                index -= 2;
+                isReturn = false;
+            } else
+            {
+                isReturn = true;
+            }
+        }
+        return index;
     }
 }

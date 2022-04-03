@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2886148236810105037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4.06, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 05ab1efa48a0949d789674bf5cdf788c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,12 +100,11 @@ MonoBehaviour:
   fruitType: 6
   isMove: 0
   fruitState: 0
-  LimitX: 1.773
+  LimitX: 1.449
   originScale: {x: 0, y: 0, z: 0}
   scaleSpeed: 0.05
   fruitScore: 1
-  LimitRedHeight: 2.472
-  isCombineOver: 1
+  LimitRedHeight: 2.149
 --- !u!58 &2886148236810105034
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -134,7 +133,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.9160885
+  m_Mass: 2.3451865
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

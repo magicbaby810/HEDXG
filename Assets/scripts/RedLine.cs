@@ -60,7 +60,7 @@ public class RedLine : MonoBehaviour
                 isMove = false;
                 gameOverCount = 0;             
                 count = 0;
-                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = new Color(255/255f, 0/255f, 0/255f, 45/255f);
+                redLineInstance.gameObject.GetComponent<SpriteRenderer>().color = new Color(255/255f, 0/255f, 0/255f, 20/255f);
                 Debug.Log("RedLine 1011112222");
             }
            
@@ -68,7 +68,7 @@ public class RedLine : MonoBehaviour
             {
                 alarmAudioSource.Stop();
                 Debug.Log("RedLine 10");
-                Invoke("GameOverAndCalculateScoreState", 0f);
+                Invoke("GameOverAndCalculateScoreState", 0.5f);
              
             }
         }
