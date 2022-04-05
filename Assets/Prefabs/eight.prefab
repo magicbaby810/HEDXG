@@ -105,6 +105,7 @@ MonoBehaviour:
   scaleSpeed: 0.05
   fruitScore: 1
   LimitRedHeight: 1.983
+  isCombining: 0
 --- !u!58 &6028220486572849026
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -132,8 +133,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 3.3458714
+  m_UseAutoMass: 0
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

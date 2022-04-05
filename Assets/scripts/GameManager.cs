@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System;
 
 public enum GameState
 {
@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
     public AudioSource fruitSource;
 
     public GameObject replayBtn;
+    public GameObject BigXG;
+
+
+    public Text BigXGCount;
+
 
     public bool isReturn = false;
 
@@ -60,7 +65,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("开始游戏");
         CreateFruit();
         gameState = GameState.StandBy;
-        totalScoreText.text = "SCORE：0";
+        totalScoreText.text = "SCORE   0";
         startBtn.SetActive(false);
     }
 
@@ -69,17 +74,22 @@ public class GameManager : MonoBehaviour
         Invoke("CreateFruit", invokeTime);
     }
 
+    public void CreateIndexFruit(int index)
+    {
+        if (fruitList[index] != null && fruitList.Length > index)
+        {
+            GameObject fruitObject = fruitList[index];
+            var currentFruit = Instantiate(fruitObject, fruitBornPosition.transform.position, fruitObject.transform.rotation);
+            currentFruit.GetComponent<Fruit>().fruitState = FruitState.StandBy;
+            Debug.Log("随机生成水果状态：" + currentFruit.GetComponent<Fruit>().fruitState);
+        }
+    }
+
     public void CreateFruit()
     {
         int index = randomForSmall();
         Debug.Log("随机生成第" + index + "个水果");
-        if (fruitList[index] != null && fruitList.Length > index)
-        {
-            GameObject fruitObject = fruitList[index];
-            var currentFruit = Instantiate(fruitObject, fruitBornPosition.transform.position, fruitObject.transform.rotation);         
-            currentFruit.GetComponent<Fruit>().fruitState = FruitState.StandBy;      
-            Debug.Log("随机生成水果状态：" + currentFruit.GetComponent<Fruit>().fruitState);
-        }
+        CreateIndexFruit(index);
     }
 
     public void CombineNewFruit(FruitType fruitType, Vector3 currentPos, Transform collisionPos)
@@ -91,12 +101,14 @@ public class GameManager : MonoBehaviour
         combineFruit.GetComponent<Fruit>().fruitState = FruitState.Collision;
         combineFruit.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
         
-        Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState);
 
-        float combineRadius = combineFruit.GetComponent<CircleCollider2D>().radius * 2;
+        float combineRadius = combineFruit.GetComponent<CircleCollider2D>().radius * 3;
         float radius = collisionPos.gameObject.GetComponent<CircleCollider2D>().radius * 2;
 
-        combineFruit.transform.localScale = new Vector3(radius / combineRadius, radius / combineRadius, radius / combineRadius);
+        Debug.Log("合成水果状态：" + combineFruit.GetComponent<Fruit>().fruitState + " " + radius / combineRadius);
+
+        //combineFruit.transform.localScale = new Vector3(radius / combineRadius, radius / combineRadius, radius / combineRadius);
+        combineFruit.transform.localScale = Vector3.zero;
 
         combineSource.Play();
     }
@@ -114,7 +126,7 @@ public class GameManager : MonoBehaviour
     public int randomForSmall()
     {
 
-        int index = Random.Range(0, 5);
+        int index = UnityEngine.Random.Range(0, 5);
        
         if (index == 4 || index == 5)
         {
@@ -128,5 +140,23 @@ public class GameManager : MonoBehaviour
             }
         }
         return index;
+    }
+
+    public void CreateBigXGAndCalculateCount()
+    {
+
+        BigXG.SetActive(true);
+        CombineBigXG.instance.startCombine();
+        Debug.Log("xxxxxxxx dad0" + BigXGCount.text);
+
+        int count = Convert.ToInt32(BigXGCount.text);
+        Debug.Log("xxxxxxxx dad1 " + count);
+        count++;
+        Debug.Log("xxxxxxxx dad2 " + count);
+        BigXGCount.text = Convert.ToString(count);
+      
+        
+
+        Debug.Log("合成大西瓜 " + BigXGCount.text);
     }
 }

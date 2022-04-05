@@ -7,6 +7,8 @@ public class GameOver : MonoBehaviour
 
     public Animator animator;
     public GameObject screenFader;
+    public GameObject BigXG;
+
 
 
     private void Awake()
@@ -31,6 +33,5 @@ public class GameOver : MonoBehaviour
             
         }
     }
-
 
 }

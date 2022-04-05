@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public enum FruitState
@@ -37,8 +38,12 @@ public class Fruit : MonoBehaviour
     public float fruitScore = 1.0f;
 
     public float LimitRedHeight = 1.0f;
-
+    // 判断当前是否正在合并
     public bool isCombining = false;
+    // 判断当前是否正在合成大西瓜
+    public bool isBigXG = false;
+
+
 
 
     private void Awake()
@@ -66,7 +71,8 @@ public class Fruit : MonoBehaviour
             {
                 Debug.Log("松开");
                 isMove = false;
-                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+                float gravityScale = (1 - (float)this.gameObject.GetComponent<Fruit>().fruitType / 10) + 1;
+                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.5f;
                 fruitState = FruitState.Dropping;
                 GameManager.gameManagerInstance.gameState = GameState.InProgress;
                 GameManager.gameManagerInstance.InvokeCreateFruit(1.5f);
@@ -101,6 +107,9 @@ public class Fruit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // 碰撞后减轻重力
+        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+
         if (fruitState == FruitState.Dropping)
         {
             Debug.Log("444");
@@ -129,14 +138,14 @@ public class Fruit : MonoBehaviour
                 GameManager.gameManagerInstance.fruitSource.Play();
             }
         }
-
+        Debug.Log("xxxxxxxx da 77");
         checkCollision(collision);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-
-       checkCollision(collision);
+        Debug.Log("xxxxxxxx da 88");
+        checkCollision(collision);
 
     }
 
@@ -147,14 +156,18 @@ public class Fruit : MonoBehaviour
         {
             if (collision.gameObject.tag.Contains("Fruit"))
             {
-                //Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
+                Debug.Log("xxxxxxxx " + fruitType + " " + collision.gameObject.GetComponent<Fruit>().fruitType);
                 if (fruitType == collision.gameObject.GetComponent<Fruit>().fruitType)
                 {
+
+
                     if (fruitType != FruitType.TEN)
                     {
+                        // 碰撞水果大小一致再合成
                         if (this.transform.localScale == originScale)
                         {
                             Debug.Log("xxxxxxxx 是否正在合成 = " + isCombining);
+                            // 正在合成，则等待
                             if (!isCombining)
                             {
                                 float currentPosXY = this.transform.position.x + this.transform.position.y;
@@ -167,10 +180,10 @@ public class Fruit : MonoBehaviour
                                     GameManager.gameManagerInstance.CombineNewFruit(fruitType, this.transform.position, collision.transform);
                                     fruitScore = ((int)fruitType + 1) * 2;
                                     GameManager.gameManagerInstance.totalScore += fruitScore;
-                                    GameManager.gameManagerInstance.totalScoreText.text = "SCORE：" + GameManager.gameManagerInstance.totalScore.ToString();
+                                    GameManager.gameManagerInstance.totalScoreText.text = "SCORE   " + GameManager.gameManagerInstance.totalScore.ToString();
                                     Destroy(this.gameObject);
                                     Destroy(collision.gameObject);
-
+                                
                                     isCombining = false;
                                     Debug.Log("xxxxxxxx 合成结束");
                                 }
@@ -179,8 +192,18 @@ public class Fruit : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(this.gameObject);
-                        Destroy(collision.gameObject);
+                        if (!isBigXG)
+                        {
+                            isBigXG = true;
+                            Debug.Log("xxxxxxxx da");
+                            // 合成大西瓜，且碰撞后消失
+                            GameManager.gameManagerInstance.CreateBigXGAndCalculateCount();
+                            Debug.Log("xxxxxxxx dad");
+                            Destroy(this.gameObject);
+                            Destroy(collision.gameObject);
+
+                            isBigXG = false;
+                        }
                     }
                 }
             }
